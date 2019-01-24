@@ -38,13 +38,13 @@ function! s:ninja_append(mode)
 endfunction
 
 function! s:ninja_insert_grab(mode)
-    call feedkeys('`[', 'n')
+	call feedkeys('`[', 'n')
 endfunction
 
 function! s:ninja_insert_grab_visual(mode)
-    normal V
-    normal `[
-    execute "normal " . s:temporary_cursor_position[1] . 'G'
+	normal V
+	normal `[
+	execute "normal " . s:temporary_cursor_position[1] . 'G'
 endfunction
 
 function! s:ninja_append_grab(mode)
@@ -52,10 +52,10 @@ function! s:ninja_append_grab(mode)
 endfunction
 
 function! s:ninja_append_grab_visual(mode)
-    normal V
-    normal `]
-    normal o
-    execute "normal " . s:temporary_cursor_position[1] . 'G'
+	normal V
+	normal `]
+	normal o
+	execute "normal " . s:temporary_cursor_position[1] . 'G'
 endfunction
 
 function! s:map_expr(sid, type, direction, count)
@@ -73,7 +73,7 @@ function! s:map(lhs, rhs, mode)
 endfunction
 
 function! s:save_cursor()
-    let s:temporary_cursor_position = getpos('.')
+	let s:temporary_cursor_position = getpos('.')
 endfunction
 
 onoremap <silent> <expr> <Plug>(ninja-left-foot-inner)  <SID>map_expr("<SID>", 'i', '[', v:count1)
