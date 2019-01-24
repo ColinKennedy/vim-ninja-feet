@@ -38,11 +38,24 @@ function! s:ninja_append(mode)
 endfunction
 
 function! s:ninja_insert_grab(mode)
-	call feedkeys('`[', 'n')
+    call feedkeys('`[', 'n')
+endfunction
+
+function! s:ninja_insert_grab_visual(mode)
+    normal V
+    normal `[
+    execute "normal " . s:temporary_cursor_position[1] . 'G'
 endfunction
 
 function! s:ninja_append_grab(mode)
 	call feedkeys('`]', 'n')
+endfunction
+
+function! s:ninja_append_grab_visual(mode)
+    normal V
+    normal `]
+    normal o
+    execute "normal " . s:temporary_cursor_position[1] . 'G'
 endfunction
 
 function! s:map_expr(sid, type, direction, count)
@@ -59,6 +72,10 @@ function! s:map(lhs, rhs, mode)
 	endif
 endfunction
 
+function! s:save_cursor()
+    let s:temporary_cursor_position = getpos('.')
+endfunction
+
 onoremap <silent> <expr> <Plug>(ninja-left-foot-inner)  <SID>map_expr("<SID>", 'i', '[', v:count1)
 onoremap <silent> <expr> <Plug>(ninja-left-foot-a)      <SID>map_expr("<SID>", 'a', '[', v:count1)
 onoremap <silent> <expr> <Plug>(ninja-right-foot-inner) <SID>map_expr("<SID>", 'i', ']', v:count1)
@@ -68,6 +85,8 @@ nnoremap <silent> <Plug>(ninja-insert) :<C-U>set operatorfunc=<SID>ninja_insert<
 nnoremap <silent> <Plug>(ninja-append) :<C-U>set operatorfunc=<SID>ninja_append<CR>g@
 nnoremap <silent> <Plug>(ninja-insert-grab) :<C-U>set operatorfunc=<SID>ninja_insert_grab<CR>g@
 nnoremap <silent> <Plug>(ninja-append-grab) :<C-U>set operatorfunc=<SID>ninja_append_grab<CR>g@
+nnoremap <silent> <Plug>(ninja-insert-grab-visual) :<C-U>call <SID>save_cursor()<BAR>set operatorfunc=<SID>ninja_insert_grab_visual<CR>g@
+nnoremap <silent> <Plug>(ninja-append-grab-visual) :<C-U>call <SID>save_cursor()<BAR>set operatorfunc=<SID>ninja_append_grab_visual<CR>g@
 
 if !exists('g:ninja_feet_no_mappings')
 	call s:map('[i', "<Plug>(ninja-left-foot-inner)", 'o')
@@ -80,4 +99,7 @@ if !exists('g:ninja_feet_no_mappings')
 
 	call s:map('g[', "<Plug>(ninja-insert-grab)", 'n')
 	call s:map('g]', "<Plug>(ninja-append-grab)", 'n')
+
+	call s:map('V[', "<Plug>(ninja-insert-grab-visual)", 'n')
+	call s:map('V]', "<Plug>(ninja-append-grab-visual)", 'n')
 endif
