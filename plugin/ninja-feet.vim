@@ -100,6 +100,6 @@ if !exists('g:ninja_feet_no_mappings')
 	call s:map('g[', "<Plug>(ninja-insert-grab)", 'n')
 	call s:map('g]', "<Plug>(ninja-append-grab)", 'n')
 
-	call s:map('V[', "<Plug>(ninja-insert-grab-visual)", 'n')
-	call s:map('V]', "<Plug>(ninja-append-grab-visual)", 'n')
+	call s:map('s[', "<Plug>(ninja-insert-grab-visual)", 'n')
+	call s:map('s]', "<Plug>(ninja-append-grab-visual)", 'n')
 endif
